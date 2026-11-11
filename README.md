@@ -219,26 +219,28 @@ Nüüd uurid, miks gateway on vajalik.
 
 | Mida | Väärtus |
 |---|---|
-| Mudel | |
-| IOS versioon | |
-| Mälu (bytes of memory) | |
+| Mudel |Cisco 2811 |
+| IOS versioon | Cisco IOS Software, Version 12.4|
+| Mälu (bytes of memory) |65536K/16384K bytes of memory |
 
 ## Küsimused
 
 **1. Miks olid ruuteri liidesed alguses `administratively down`, aga kommutaatori pordid töötasid kohe? Mis käsk need sisse lülitab?**
-> 
+> Kommutaatori pordid on vaikimisi sisse lülitatud, et seadmed saaksid kohe ühenduda. Ruuteri liidesed on aga turvakaalutlustel ja võrgu haldamiseks vaikimisi välja lülitatud (administratively down). Need lülitatakse sisse liidese seadistusrežiimis käsuga no shutdown.
 
 **2. Mis on PC1 default gateway ja miks just see aadress?**
-> 
+> PC1 default gateway on 192.168.1.1. See on ruuteri R1 liidese (FastEthernet0/0) IP-aadress samas alavõrgus. See on arvutile vajalik kui "uks", mille kaudu pääseb teistesse võrkudesse.
 
 **3. Mida tähendab täht `C` käsu `show ip route` väljundis? Miks ruuter neid võrke teab, kuigi sa ei lisanud ühtegi marsruuti?**
-> 
+> Täht C tähendab Connected ehk otseühenduses olevat võrku. Ruuter teab neid automaatselt, kuna sa seadistasid liidesele IP-aadressi ja lülitasid selle sisse (no shutdown) – ruuter tuvastas füüsiliselt külge ühendatud alavõrgu ise.
 
 **4. Osa 5: sinu ennustus, tegelik tulemus ja selgitus. Miks ping ei töötanud, kuigi PC1 seaded olid õiged?**
-> 
+> Ennustus: Ping ei tööta, sest PC2 ei tea, kuhu vastus saata.
+Tulemus: Request timed out.
+Selgitus: Ping on kahesuunaline. Kuigi PC1 sai tänu õigele gateway'le paketi teele panna ja ruuter toimetas selle PC2-le, ei oska PC2 vastust tagasi saata, sest tal pole Default Gateway'd (ta ei tea, millise "ukse" kaudu vastus teise võrku saata).
 
 **5. Mitu hüpet näitas `tracert` ja mis oli esimese hüppe aadress? Miks just see?**
-> 
+> tracert näitas 1 hüpet ja esimese hüppe aadress oli ruuteri liides 192.168.1.1. See on esimene punkt, kuhu pakett kohalikus võrgus teise võrgu poole liikudes põrkab (ruuter ongi esimene vahejaam ehk hüpe).
 
 ---
 
